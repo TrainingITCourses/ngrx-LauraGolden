@@ -33,9 +33,9 @@ export class ApiService {
     if (this.agencias) { return of(this.agencias); }
 
     return this.httpC.get('../../assets/launchagencies.json')
-              .pipe(
-                map((res: any) => (<any[]>res.agencies).sort((a: any, b: any) => a.name.localeCompare(b.name))),
-                tap((res) => this.agencias = res)
+              .pipe(map((res: any) => res.agencies)
+                // map((res: any) => (<any[]>res.agencies).sort((a: any, b: any) => a.name.localeCompare(b.name))),
+                // tap((res) => this.agencias = res)
               );
   }
 
