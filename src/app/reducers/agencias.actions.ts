@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
 export enum AgenciasActionTypes {
-  CargarAgencias = '[Agencias] Load',
+  CargarAgencias = '[Agencias] Cargar',
   AgenciasCargadas = '[Agencias] Cargadas',
   AgenciasNoCargadas = '[Agencias] No Cargadas'
 }
@@ -12,12 +12,15 @@ export class CargarAgencias implements Action {
 
 export class AgenciasCargadas implements Action {
   readonly type = AgenciasActionTypes.AgenciasCargadas;
-  constructor(public readonly payload: any[]) {}
+  constructor(readonly payload: any[]) {}
 }
 
 export class AgenciasNoCargadas implements Action {
   readonly type = AgenciasActionTypes.AgenciasNoCargadas;
-  constructor(public readonly payload: string) {}
+  constructor(readonly payload: string) {}
 }
 
-export type AgenciasActions = CargarAgencias | AgenciasCargadas | AgenciasNoCargadas;
+export type AgenciasActions =
+  | CargarAgencias
+  | AgenciasCargadas
+  | AgenciasNoCargadas;

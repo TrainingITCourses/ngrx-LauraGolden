@@ -4,7 +4,7 @@ import { map, tap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import {
     CargaLanzamientos,
-    CargaEstados,
+    // CargaEstados,
     // CargaAgencias,
     CargaMisiones
 } from './global-store.actions';
@@ -28,6 +28,7 @@ export class ApiService {
   //     }
   //   }
   private agencias: any[];
+  private estados: any[];
 
   public getAgencies(): Observable<any[]> {
     if (this.agencias) { return of(this.agencias); }
@@ -51,16 +52,26 @@ export class ApiService {
     }
   }
 
-  public getStatusTypes() {
-    const states = this.global.getSnapShot(GlobalSlideTypes.estados);
-    if (states.length > 0) {
-      this.global.dispatch(new CargaEstados([...states]));
-    } else {
-      this.httpC
-      .get('../../assets/launchstatus.json')
-      .pipe(map((res: any) => res.types))
-      .subscribe(statuses => this.global.dispatch(new CargaEstados(statuses)));
-    }
+  // public getStatusTypes() {
+  //   const states = this.global.getSnapShot(GlobalSlideTypes.estados);
+  //   if (states.length > 0) {
+  //     this.global.dispatch(new CargaEstados([...states]));
+  //   } else {
+  //     this.httpC
+  //     .get('../../assets/launchstatus.json')
+  //     .pipe(map((res: any) => res.types))
+  //     .subscribe(statuses => this.global.dispatch(new CargaEstados(statuses)));
+  //   }
+  // }
+
+  public getStatusTypes(): Observable<any[]> {
+    if (this.estados) { return of(this.estados); }
+
+    return this.httpC.get('../../assets/launchstatus.json')
+              .pipe(map((res: any) => res.estados)
+                // map((res: any) => (<any[]>res.agencies).sort((a: any, b: any) => a.name.localeCompare(b.name))),
+                // tap((res) => this.agencias = res)
+              );
   }
 
   public getCriteria(criterio: ModoBusqueda) {

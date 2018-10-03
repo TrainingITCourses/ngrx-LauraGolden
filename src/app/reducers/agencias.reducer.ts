@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { AgenciasActions, AgenciasActionTypes } from './agencias.actions';
 
+
 export interface AgenciaState {
   agencias: any[];
   cargando: boolean;
@@ -9,10 +10,11 @@ export interface AgenciaState {
 
 export const initialState: AgenciaState = {
   agencias: [],
-  cargando: false
+  cargando: false,
+  mensaje: '',
 };
 
-export function reducer(state = initialState, action: Action): AgenciaState {
+export function reducer(state = initialState, action: AgenciasActions): AgenciaState {
   switch (action.type) {
     case AgenciasActionTypes.CargarAgencias:
       state.cargando = true;

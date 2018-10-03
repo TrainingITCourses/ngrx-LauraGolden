@@ -13,9 +13,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AgenciasEffects } from './reducers/agencias.effects';
-import { MisionesEffects } from './reducers/misiones.effects';
+import { ApiService } from './services/api.service';
+import { EstadosCargados } from './reducers/estados.actions';
 import { EstadosEffects } from './reducers/estados.effects';
-import { LanzamientosEffects } from './reducers/lanzamientos.effects';
+// import { MisionesEffects } from './reducers/misiones.effects';
+// import { EstadosEffects } from './reducers/estados.effects';
+// import { LanzamientosEffects } from './reducers/lanzamientos.effects';
 
 @NgModule({
   declarations: [
@@ -30,9 +33,10 @@ import { LanzamientosEffects } from './reducers/lanzamientos.effects';
     HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AgenciasEffects, MisionesEffects, EstadosEffects, LanzamientosEffects])
+    // EffectsModule.forRoot([AgenciasEffects, MisionesEffects, EstadosEffects, LanzamientosEffects])
+    EffectsModule.forRoot([AgenciasEffects, EstadosEffects])
   ],
-  providers: [],
+  providers: [ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

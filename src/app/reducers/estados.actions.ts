@@ -1,11 +1,25 @@
 import { Action } from '@ngrx/store';
 
 export enum EstadosActionTypes {
-  LoadEstadoss = '[Estados] Load Estadoss'
+  CargarEstados = '[Estados] Cargar',
+  EstadosCargados = '[Estados] Cargados',
+  EstadosNoCargados = '[Estados] No Cargados'
 }
 
-export class LoadEstadoss implements Action {
-  readonly type = EstadosActionTypes.LoadEstadoss;
+export class CargarEstados implements Action {
+  readonly type = EstadosActionTypes.CargarEstados;
+}
+export class EstadosCargados implements Action {
+  readonly type = EstadosActionTypes.EstadosCargados;
+  constructor(readonly payload: any[]) {}
 }
 
-export type EstadosActions = LoadEstadoss;
+export class EstadosNoCargados implements Action {
+  readonly type = EstadosActionTypes.EstadosNoCargados;
+  constructor(readonly payload: string) {}
+}
+
+export type EstadosActions =
+  | CargarEstados
+  | EstadosCargados
+  | EstadosNoCargados;

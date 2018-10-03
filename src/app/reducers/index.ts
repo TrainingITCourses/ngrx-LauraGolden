@@ -14,7 +14,7 @@ import * as fromLanzamientos from './lanzamientos.reducer';
 export interface State {
 
   agencias: fromAgencias.AgenciaState;
-  estados: fromEstados.State;
+  estados: fromEstados.EstadoState;
   misiones: fromMisiones.State;
   lanzamientos: fromLanzamientos.State;
 }
