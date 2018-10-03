@@ -1,8 +1,13 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { GlobalStore, GlobalSlideTypes } from '../services/global-store.state';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { State } from '../reducers';
 import { ModoBusqueda } from '../shared/criterion/criterion-modo';
+import { CargarAgencias } from '../reducers/agencias.actions';
+import { CargarEstados } from '../reducers/estados.actions';
+import { CargarMisiones } from '../reducers/misiones.actions';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-search',
@@ -12,30 +17,58 @@ import { ModoBusqueda } from '../shared/criterion/criterion-modo';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchComponent implements OnInit {
-  public lanFiltrados$: Observable<any>;
-  public criterios$: Observable<any>;
+  // public lanFiltrados$: Observable<any>;
+  // public criterios$: Observable<any>;
   public valores$: Observable<any>;
+  public lanFiltrados: any[];
   public seleccionado: ModoBusqueda;
   private criterioActual: ModoBusqueda;
 
-  constructor(private api: ApiService, private global: GlobalStore) { }
+  constructor(private store: Store<State>) { }
   @Input() public titulo: string;
 
   ngOnInit() {
-    this.cargaObservables();
+    // this.cargaObservables();
     console.log('Search_ngOnInit');
   }
 
+
+  cargaData( id: number, name: string ) {
+    this.store.dispatch(new CargarEstados());
+    this.store.dispatch(new CargarAgencias());
+    this.store.dispatch(new CargarMisiones());
+
+  }
+
   private cargaObservables() {
-    this.valores$ = this.global.select$(GlobalSlideTypes.valores);
-    this.lanFiltrados$ = this.global.select$(GlobalSlideTypes.lanzamientos);
+    // this.store
+    //   .select('launch')
+    //   .subscribe(launchesState => (this.lanFiltrados = launchesState.launches));
+
+    // this.valores$ = this.global.select$(GlobalSlideTypes.valores);
+    // this.lanFiltrados$ = this.global.select$(GlobalSlideTypes.lanzamientos);
   }
 
   onCriterioSeleccionado (criterioSel: ModoBusqueda) {
     console.log('criterio seleccionado: ' + criterioSel);
 
     this.criterioActual = criterioSel;
-    this.api.getCriteria(criterioSel);
+    // this.api.getCriteria(criterioSel);
+    switch (criterioSel) {
+      case 1: // Estados
+        this.store.dispatch(new CargarEstados());
+
+
+
+        break;
+      case 2: // Agencias
+        this.store.dispatch(new CargarAgencias());
+        break;
+      case 3: // Tipos
+      this.store.dispatch(new CargarMisiones());
+        break;
+      default:
+    }
   }
 
   onSubCriterioSeleccionado = (SubcriterioSel: Number) => {
@@ -43,6 +76,10 @@ export class SearchComponent implements OnInit {
     // Duda: por mucho que reciba un parámetro de tipo Number, me llega siempre un string,
     // ¿da igual qué tipo se ponga para recibir el parámetro?
     const busca: number = Number(SubcriterioSel);
-    this.api.getFilterLaunches(this.criterioActual, busca);
+    // this.api.getFilterLaunches(this.criterioActual, busca);
+    // onBrake = () => this.store.dispatch(new Brake());
+    // onThrottle = () => this.store.dispatch(new Throttle());
+    // onSave = () => this.store.dispatch(new Save(this.motor));
+
   }
 }

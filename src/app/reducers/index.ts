@@ -15,8 +15,8 @@ export interface State {
 
   agencias: fromAgencias.AgenciaState;
   estados: fromEstados.EstadoState;
-  misiones: fromMisiones.State;
-  lanzamientos: fromLanzamientos.State;
+  misiones: fromMisiones.MisionState;
+  lanzamientos: fromLanzamientos.LanzamientoState;
 }
 
 export const reducers: ActionReducerMap<State> = {
