@@ -6,7 +6,12 @@ import { ModoBusqueda } from '../shared/criterion/criterion-modo';
 import { CargarAgencias } from '../reducers/agencias.actions';
 import { CargarEstados } from '../reducers/estados.actions';
 import { CargarMisiones } from '../reducers/misiones.actions';
+import { FiltrarLanzamientos } from '../reducers/lanzamientos.actions';
 import { Observable } from 'rxjs';
+import { LanzamientoState } from '../reducers/lanzamientos.reducer';
+import { EstadoState } from '../reducers/estados.reducer';
+import { AgenciaState } from '../reducers/agencias.reducer';
+import { MisionState } from '../reducers/misiones.reducer';
 
 
 @Component({
@@ -20,7 +25,7 @@ export class SearchComponent implements OnInit {
   // public lanFiltrados$: Observable<any>;
   // public criterios$: Observable<any>;
   public valores$: Observable<any>;
-  public lanFiltrados: any[];
+  public lanFiltrados$: Observable<any>;
   public seleccionado: ModoBusqueda;
   private criterioActual: ModoBusqueda;
 
@@ -28,22 +33,51 @@ export class SearchComponent implements OnInit {
   @Input() public titulo: string;
 
   ngOnInit() {
-    // this.cargaObservables();
+    this.cargaData();
+    this.cargaObservables();
     console.log('Search_ngOnInit');
   }
 
 
-  cargaData( id: number, name: string ) {
+  // cargaData( id: number, name: string ) {
+  cargaData() {
     this.store.dispatch(new CargarEstados());
     this.store.dispatch(new CargarAgencias());
     this.store.dispatch(new CargarMisiones());
-
+    this.store.dispatch(new CargarMisiones());
   }
 
   private cargaObservables() {
-    // this.store
-    //   .select('launch')
-    //   .subscribe(launchesState => (this.lanFiltrados = launchesState.launches));
+    this.store
+      .select<LanzamientoState>('Lanzamientos')
+      .subscribe((lan: any) => {
+        this.lanFiltrados$ = lan;
+      });
+
+      // switch (this.criterioActual) {
+      //   case 1: // Estados
+      //       this.store
+      //       .select<EstadoState>('Estados')
+      //       .subscribe((est: any) => {
+      //         this.valores$ = est;
+      //       });
+      //       break;
+      //   case 2: // Agencias
+      //       this.store
+      //       .select<AgenciaState>('Agencias')
+      //       .subscribe((est: any) => {
+      //         this.valores$ = est;
+      //       });
+      //       break;
+      //   case 3: // Tipos
+      //       this.store
+      //       .select<MisionState>('Misiones')
+      //       .subscribe((est: any) => {
+      //         this.valores$ = est;
+      //       });
+      //     break;
+      //   default:
+      // }
 
     // this.valores$ = this.global.select$(GlobalSlideTypes.valores);
     // this.lanFiltrados$ = this.global.select$(GlobalSlideTypes.lanzamientos);
@@ -56,16 +90,18 @@ export class SearchComponent implements OnInit {
     // this.api.getCriteria(criterioSel);
     switch (criterioSel) {
       case 1: // Estados
-        this.store.dispatch(new CargarEstados());
-
-
-
+        // this.store.dispatch(new CargarEstados());
+        this.store
+            .select<EstadoState>('Estados')
+            .subscribe((est: any) => {
+              this.valores$ = est;
+            });
         break;
       case 2: // Agencias
-        this.store.dispatch(new CargarAgencias());
+        // this.store.dispatch(new CargarAgencias());
         break;
       case 3: // Tipos
-      this.store.dispatch(new CargarMisiones());
+        // this.store.dispatch(new CargarMisiones());
         break;
       default:
     }

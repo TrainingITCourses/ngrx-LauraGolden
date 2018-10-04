@@ -20,7 +20,6 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
-
   agencias: fromAgencias.reducer,
   estados: fromEstados.reducer,
   misiones: fromMisiones.reducer,
