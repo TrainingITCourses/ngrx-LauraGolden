@@ -9,13 +9,13 @@ import { of } from 'rxjs';
 @Injectable()
 export class EstadosEffects {
 
-  @Effect()
-  public load$ = this.actions$.ofType(EstadosActionTypes.CargarEstados).pipe(
-    mergeMap((action: CargarEstados) => this.apiService.getStatusTypes().pipe(
-      map(estados => new EstadosCargados(estados)),
-      catchError( err => of(new EstadosNoCargados('Los estados no han podido cargarse')))
-    ))
-  );
+  // @Effect()
+  // public load$ = this.actions$.ofType(EstadosActionTypes.CargarEstados).pipe(
+  //   mergeMap((action: CargarEstados) => this.apiService.getStatusTypes().pipe(
+  //     map(estados => new EstadosCargados(estados)),
+  //     catchError( err => of(new EstadosNoCargados('Los estados no han podido cargarse')))
+  //   ))
+  // );
 
   constructor(private actions$: Actions, private apiService: ApiService) {}
 }

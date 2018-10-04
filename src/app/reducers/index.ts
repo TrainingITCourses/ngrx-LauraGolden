@@ -10,21 +10,24 @@ import * as fromAgencias from './agencias.reducer';
 import * as fromEstados from './estados.reducer';
 import * as fromMisiones from './misiones.reducer';
 import * as fromLanzamientos from './lanzamientos.reducer';
+import * as fromValores from './valores.reducer';
 
-export interface State {
+export interface GlobalState {
 
   agencias: fromAgencias.AgenciaState;
   estados: fromEstados.EstadoState;
   misiones: fromMisiones.MisionState;
   lanzamientos: fromLanzamientos.LanzamientoState;
+  valores: fromValores.ValoresState;
 }
 
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<GlobalState> = {
   agencias: fromAgencias.reducer,
   estados: fromEstados.reducer,
   misiones: fromMisiones.reducer,
   lanzamientos: fromLanzamientos.reducer,
+  valores: fromValores.reducer,
 };
 
 
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<GlobalState>[] = !environment.production ? [] : [];

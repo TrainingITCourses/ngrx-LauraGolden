@@ -17,6 +17,7 @@ import { AgenciasEffects } from './reducers/agencias.effects';
 import { EstadosEffects } from './reducers/estados.effects';
 import { MisionesEffects } from './reducers/misiones.effects';
 import { LanzamientosEffects } from './reducers/lanzamientos.effects';
+import { ValoresEffects } from './reducers/valores.effects';
 
 
 
@@ -33,7 +34,7 @@ import { LanzamientosEffects } from './reducers/lanzamientos.effects';
     HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AgenciasEffects, EstadosEffects, MisionesEffects, LanzamientosEffects])
+    EffectsModule.forRoot([AgenciasEffects, EstadosEffects, MisionesEffects, LanzamientosEffects, ValoresEffects])
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

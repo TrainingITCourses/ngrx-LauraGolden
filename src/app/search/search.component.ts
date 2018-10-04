@@ -1,17 +1,13 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Store } from '@ngrx/store';
-import { State } from '../reducers';
-import { ModoBusqueda } from '../shared/criterion/criterion-modo';
-import { CargarAgencias } from '../reducers/agencias.actions';
-import { CargarEstados } from '../reducers/estados.actions';
-import { CargarMisiones } from '../reducers/misiones.actions';
-import { FiltrarLanzamientos } from '../reducers/lanzamientos.actions';
 import { Observable } from 'rxjs';
-import { LanzamientoState } from '../reducers/lanzamientos.reducer';
-import { EstadoState } from '../reducers/estados.reducer';
-import { AgenciaState } from '../reducers/agencias.reducer';
-import { MisionState } from '../reducers/misiones.reducer';
+import { map } from 'rxjs/operators';
+import { GlobalState } from '../reducers';
+import { ModoBusqueda } from '../shared/criterion/criterion-modo';
+import { CargarValores } from '../reducers/valores.actions';
+import { CargarLanzamientos } from '../reducers/lanzamientos.actions';
+
 
 
 @Component({
@@ -22,89 +18,43 @@ import { MisionState } from '../reducers/misiones.reducer';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchComponent implements OnInit {
-  // public lanFiltrados$: Observable<any>;
-  // public criterios$: Observable<any>;
   public valores$: Observable<any>;
-  public lanFiltrados$: Observable<any>;
-  public seleccionado: ModoBusqueda;
+  public lanzamientos$: Observable<any>;
   private criterioActual: ModoBusqueda;
 
-  constructor(private store: Store<State>) { }
+  constructor(private store: Store<GlobalState>) { }
   @Input() public titulo: string;
 
   ngOnInit() {
-    this.cargaData();
     this.cargaObservables();
     console.log('Search_ngOnInit');
   }
 
 
-  // cargaData( id: number, name: string ) {
-  cargaData() {
-    this.store.dispatch(new CargarEstados());
-    this.store.dispatch(new CargarAgencias());
-    this.store.dispatch(new CargarMisiones());
-    this.store.dispatch(new CargarMisiones());
-  }
-
   private cargaObservables() {
-    this.store
-      .select<LanzamientoState>('Lanzamientos')
-      .subscribe((lan: any) => {
-        this.lanFiltrados$ = lan;
-      });
+      this.valores$ = this.store.select('valores').pipe(
+        map(Val => {
+          return Val.valores;
+        })
+      );
 
-      // switch (this.criterioActual) {
-      //   case 1: // Estados
-      //       this.store
-      //       .select<EstadoState>('Estados')
-      //       .subscribe((est: any) => {
-      //         this.valores$ = est;
-      //       });
-      //       break;
-      //   case 2: // Agencias
-      //       this.store
-      //       .select<AgenciaState>('Agencias')
-      //       .subscribe((est: any) => {
-      //         this.valores$ = est;
-      //       });
-      //       break;
-      //   case 3: // Tipos
-      //       this.store
-      //       .select<MisionState>('Misiones')
-      //       .subscribe((est: any) => {
-      //         this.valores$ = est;
-      //       });
-      //     break;
-      //   default:
-      // }
-
-    // this.valores$ = this.global.select$(GlobalSlideTypes.valores);
-    // this.lanFiltrados$ = this.global.select$(GlobalSlideTypes.lanzamientos);
+      this.lanzamientos$ = this.store.select('lanzamientos').pipe(
+        map(Lan => {
+          return Lan.lanzamientos;
+        })
+      );
   }
 
   onCriterioSeleccionado (criterioSel: ModoBusqueda) {
     console.log('criterio seleccionado: ' + criterioSel);
 
     this.criterioActual = criterioSel;
-    // this.api.getCriteria(criterioSel);
-    switch (criterioSel) {
-      case 1: // Estados
-        // this.store.dispatch(new CargarEstados());
-        this.store
-            .select<EstadoState>('Estados')
-            .subscribe((est: any) => {
-              this.valores$ = est;
-            });
-        break;
-      case 2: // Agencias
-        // this.store.dispatch(new CargarAgencias());
-        break;
-      case 3: // Tipos
-        // this.store.dispatch(new CargarMisiones());
-        break;
-      default:
-    }
+    // como se selecciona un nuevo criterio de búsqueda, vaciamos los lanzamientos que estuviesen cargados
+    this.store.dispatch(new CargarLanzamientos([-1, -1]));
+    // cargamos la acción de carga de valores según un criterio de búsqueda,
+    // el efecto escucha dicha acción, y éste es el que llama al api para cargar la información.
+    this.store.dispatch(new CargarValores(this.criterioActual));
+
   }
 
   onSubCriterioSeleccionado = (SubcriterioSel: Number) => {
@@ -112,10 +62,8 @@ export class SearchComponent implements OnInit {
     // Duda: por mucho que reciba un parámetro de tipo Number, me llega siempre un string,
     // ¿da igual qué tipo se ponga para recibir el parámetro?
     const busca: number = Number(SubcriterioSel);
-    // this.api.getFilterLaunches(this.criterioActual, busca);
-    // onBrake = () => this.store.dispatch(new Brake());
-    // onThrottle = () => this.store.dispatch(new Throttle());
-    // onSave = () => this.store.dispatch(new Save(this.motor));
+    // cargamos la acción del lanzamiento, el efecto escucha dicha acción, y éste es el que llama al api para cargar la información.
+    this.store.dispatch(new CargarLanzamientos([this.criterioActual, SubcriterioSel]));
 
   }
 }

@@ -10,9 +10,9 @@
         </app-criterion>     
 
         <h4> Lista de resultados </h4>
-        <app-counter [Lanzamientos]="lanFiltrados$ | async"></app-counter>   
+        <app-counter [lanzamientos]="lanzamientos$ | async"></app-counter>   
         <app-launches-list             
-            [lanzamientos]="lanFiltrados$ | async">   
+            [lanzamientos]="lanzamientos$ | async">   
         </app-launches-list>
     </div>   
 </div>

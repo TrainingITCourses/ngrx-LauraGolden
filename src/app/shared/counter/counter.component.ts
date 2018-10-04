@@ -7,7 +7,7 @@ import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CounterComponent implements OnInit {
-  @Input() public Lanzamientos: any[];
+  @Input() public lanzamientos: any[];
   constructor() { }
 
   ngOnInit() {

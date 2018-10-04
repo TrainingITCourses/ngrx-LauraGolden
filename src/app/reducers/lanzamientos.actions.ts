@@ -1,29 +1,29 @@
 import { Action } from '@ngrx/store';
 
 export enum LanzamientosActionTypes {
-  FiltrarLanzamientos = '[Lanzamientos] Filtrar',
-  LanzamientosFiltrados = '[Lanzamientos] Filtrados',
-  LanzamientosNoFiltrados = '[Lanzamientos] No Filtrados'
+  CargarLanzamientos = '[Lanzamientos] Cargar',
+  LanzamientosCargados = '[Lanzamientos] Cargados',
+  LanzamientosNoCargados = '[Lanzamientos] No Cargados'
 }
 
-export class FiltrarLanzamientos implements Action {
-  readonly type = LanzamientosActionTypes.FiltrarLanzamientos;
+export class CargarLanzamientos implements Action {
+  readonly type = LanzamientosActionTypes.CargarLanzamientos;
   constructor(readonly payload: any) {}
 }
 
-export class LanzamientosFiltrados implements Action {
-  readonly type = LanzamientosActionTypes.LanzamientosFiltrados;
+export class LanzamientosCargados implements Action {
+  readonly type = LanzamientosActionTypes.LanzamientosCargados;
   constructor(readonly payload: any[]) {}
 }
 
-export class LanzamientosNoFiltrados implements Action {
-  readonly type = LanzamientosActionTypes.LanzamientosNoFiltrados;
+export class LanzamientosNoCargados implements Action {
+  readonly type = LanzamientosActionTypes.LanzamientosNoCargados;
   constructor(readonly payload: string) {}
 }
 
 export type LanzamientosActions =
-  | FiltrarLanzamientos
-  | LanzamientosFiltrados
-  | LanzamientosNoFiltrados;
+  | CargarLanzamientos
+  | LanzamientosCargados
+  | LanzamientosNoCargados;
 
 

@@ -16,15 +16,15 @@ export const initialState: LanzamientoState = {
 
 export function reducer(state = initialState, action: LanzamientosActions): LanzamientoState {
   switch (action.type) {
-    case LanzamientosActionTypes.FiltrarLanzamientos:
+    case LanzamientosActionTypes.CargarLanzamientos:
       state.cargando = true;
       return {...state};
-    case LanzamientosActionTypes.LanzamientosFiltrados:
+    case LanzamientosActionTypes.LanzamientosCargados:
       state.lanzamientos = action.payload;
       state.cargando = false;
       state.mensaje = null;
       return {...state };
-    case LanzamientosActionTypes.LanzamientosNoFiltrados:
+    case LanzamientosActionTypes.LanzamientosNoCargados:
       state.lanzamientos = [];
       state.cargando = false;
       state.mensaje = action.payload;
