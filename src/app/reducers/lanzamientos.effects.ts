@@ -5,8 +5,6 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
 import { of } from 'rxjs';
 
-
-
 @Injectable()
 export class LanzamientosEffects {
 

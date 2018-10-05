@@ -1,9 +1,10 @@
 import { ValoresActions, ValoresActionTypes } from './valores.actions';
+import { Valores } from '../interfaces/valores';
 
 
 export interface ValoresState {
-  valores: any[];
-  message: string;
+  valores: Valores[];
+  message?: string;
 }
 
 export const initialState: ValoresState = {
@@ -15,9 +16,9 @@ export function reducer(state = initialState, action: ValoresActions): ValoresSt
   switch (action.type) {
     case ValoresActionTypes.CargarValores:
       return { ...state };
-    case ValoresActionTypes.ValoresGuardados:
+    case ValoresActionTypes.ValoresCargados:
       return { ...state, valores: action.payload };
-    case ValoresActionTypes.ValoresNoGuardados:
+    case ValoresActionTypes.ValoresNoCargados:
       this.message = action.payload;
       break;
     default:

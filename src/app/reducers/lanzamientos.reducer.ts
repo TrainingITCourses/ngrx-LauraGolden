@@ -1,32 +1,28 @@
 import { Action } from '@ngrx/store';
 import { LanzamientosActions, LanzamientosActionTypes } from './lanzamientos.actions';
+import { Lanzamiento } from '../interfaces/lanzamiento';
 
 
 export interface LanzamientoState {
-  lanzamientos: any[];
-  cargando: boolean;
+  lanzamientos: Lanzamiento[];
   mensaje?: string;
 }
 
 export const initialState: LanzamientoState = {
   lanzamientos: [],
-  cargando: false,
-  mensaje: '',
+  mensaje: ''
 };
 
 export function reducer(state = initialState, action: LanzamientosActions): LanzamientoState {
   switch (action.type) {
     case LanzamientosActionTypes.CargarLanzamientos:
-      state.cargando = true;
       return {...state};
     case LanzamientosActionTypes.LanzamientosCargados:
       state.lanzamientos = action.payload;
-      state.cargando = false;
       state.mensaje = null;
       return {...state };
     case LanzamientosActionTypes.LanzamientosNoCargados:
       state.lanzamientos = [];
-      state.cargando = false;
       state.mensaje = action.payload;
       return { ...state };
     default:

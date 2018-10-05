@@ -8,8 +8,6 @@ import { ModoBusqueda } from '../shared/criterion/criterion-modo';
 import { CargarValores } from '../reducers/valores.actions';
 import { CargarLanzamientos } from '../reducers/lanzamientos.actions';
 
-
-
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -54,6 +52,7 @@ export class SearchComponent implements OnInit {
     // cargamos la acción de carga de valores según un criterio de búsqueda,
     // el efecto escucha dicha acción, y éste es el que llama al api para cargar la información.
     this.store.dispatch(new CargarValores(this.criterioActual));
+
 
   }
 

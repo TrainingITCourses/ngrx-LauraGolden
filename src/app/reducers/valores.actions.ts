@@ -1,10 +1,11 @@
 import { Action } from '@ngrx/store';
 import { ModoBusqueda } from '../shared/criterion/criterion-modo';
+import { Valores } from '../interfaces/valores';
 
 export enum ValoresActionTypes {
   CargarValores = '[Valores] Cargar',
-  ValoresGuardados = '[Valores] Guardados',
-  ValoresNoGuardados = '[Valores] No Guardados',
+  ValoresCargados = '[Valores] Cargados',
+  ValoresNoCargados = '[Valores] No Cargados',
 }
 
 export class CargarValores implements Action {
@@ -13,13 +14,13 @@ export class CargarValores implements Action {
 }
 
 export class ValoresGuardados implements Action {
-  readonly type = ValoresActionTypes.ValoresGuardados;
-  constructor(public readonly payload: any[]) { }
+  readonly type = ValoresActionTypes.ValoresCargados;
+  constructor(public readonly payload: Valores[]) { }
 }
 
 export class ValoresNoGuardados implements Action {
-  readonly type = ValoresActionTypes.ValoresNoGuardados;
-  constructor(public readonly payload?: any[]) { }
+  readonly type = ValoresActionTypes.ValoresNoCargados;
+  constructor(public readonly payload: string) { }
 }
 export type ValoresActions =
   |CargarValores

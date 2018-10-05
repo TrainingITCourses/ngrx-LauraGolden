@@ -1,9 +1,15 @@
+import { Lanzamiento } from '../../interfaces/lanzamiento';
+import { Estado } from '../../interfaces/estado';
+import { Mision } from '../../interfaces/mision';
+import { Valores } from '../../interfaces/valores';
+import { Agencia } from '../../interfaces/agencia';
+
 export interface Global {
-    lanzamientos: any[];
-    estados: any[];
-    agencias: any[];
-    misiones: any[];
-    valores: any[];
+    lanzamientos: Lanzamiento[];
+    estados: Estado[];
+    agencias: Agencia[];
+    misiones: Mision[];
+    valores: Valores[];
     numLanzamientos: number;
   }
 
